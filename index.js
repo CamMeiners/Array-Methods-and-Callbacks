@@ -33,7 +33,7 @@ function getFinals(data) {
    })
    return allFinals;
 }
-console.log(getFinals(fifaData));
+console.log('task2',getFinals(fifaData));
 
 
 
@@ -47,7 +47,7 @@ function getYears(array, getFinalscb) {
     const newArray = getFinalscb(array).map((item) => item.Year);
     return newArray;
 }
-console.log(getYears(fifaData, getFinals));
+console.log('task3',getYears(fifaData, getFinals));
 
 
 
@@ -58,9 +58,18 @@ Use the higher-order function getWinners to do the following:
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(/* code here */) {
-    /* code here */
-}
+function getWinners(array, getFinalscb) {
+    const winnerFinals = getFinalscb(array).map(function(item){
+        if (item["Home Team Goals"]> item["Away Team Goals"]){
+            return item["Home Team Name"]
+        }else {
+            return item["Away Team Name"]
+        }
+    })
+    return winnerFinals
+    }
+    console.log('task4',getWinners(fifaData,getFinals));
+
 
 
 
@@ -74,9 +83,13 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
-}
+function getWinnersByYear(array, getYearscb, getWinnerscb) {
+    const arrayYears = getYearscb(array, getFinals)
+    return arrayWinners.map(function(item,index){
+    return `In ${arrayYears.[index]}, ${item} won the world cup!`
+    })
+    }
+    console.log(getWinnersByYear(fifaData, getYears, getWinners))
 
 
 
@@ -90,9 +103,13 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals(/* code here */) {
-   /* code here */
-}
+function getAverageGoals(getFinalscb) {
+    const totalGoals = getFinalscb.reduce(function (acc,item) {
+    return acc + item["Away Team Goals"] + item ["Home Team Goals"];
+    },0)
+    return (totalGoals/getFinalscb.length).toFixed(2)
+    }
+    console.log(getAverageGoals(getFinals(fifaData)))
 
 
 
